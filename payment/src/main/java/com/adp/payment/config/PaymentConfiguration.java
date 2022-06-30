@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 
 import lombok.Data;
 
@@ -61,4 +62,6 @@ public class PaymentConfiguration {
 			coinBalanceMap = coinsList.stream().collect(Collectors.toMap(i -> i, i -> getMaxCoins()));
 			return coinBalanceMap;
 	}
+	
+	
 }

@@ -41,19 +41,23 @@ public class PaymentServiceImpl implements PaymentService {
 	
 	@Override
 	public Map<Integer, Integer> getChangeDue(Integer bill) {
+		if (bill == null) throw new InvalidBillAmountException("Bill Amount cannot be null");
 		Map<Integer, Integer> changeDue = new HashMap<>();
 		List<Integer> coinsList = paymentConfig.getAvailableCoins();
 	    Integer totalCoinsValue =  getTotalValueOfAvailableCoins() ;
+	    
 	    System.out.println("Total value of coins : " + totalCoinsValue);
-
-	    //bill *= 100; //convert bill to cents;
+	    bill *= 100; //convert bill to cents;
 	    System.out.println("Bill value : " + bill);	    
 	    if (bill > totalCoinsValue )
-	    	throw new InvalidBillAmountException("Bill amount exceeds the total available coins");
+	    	throw new NotEnoughCoinsException("Bill amount exceeds the total available coins");
 	    coinsList = coinBalanceMap.entrySet().stream().filter(x -> x.getValue() != 0).map(Map.Entry::getKey).collect(Collectors.toList());
+	   
 	    System.out.println("Coins Available " + Arrays.asList(coinsList));
 	    List<Integer> minCoinsList = PaymentUtil.countMinCoinsUtil(bill, coinsList, coinsList.size());
-		System.out.println("Coins to be used " + Arrays.asList(minCoinsList));
+		
+	    System.out.println("Coins to be used " + Arrays.asList(minCoinsList));
+		
 		for(int i=0; i<minCoinsList.size(); i++) {
 			int count = 0;
 			if (changeDue.containsKey(minCoinsList.get(i))) {

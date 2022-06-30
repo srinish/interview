@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.Errors;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -17,18 +18,20 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ErrorResponse {
-    private final int status;
-    private final String message;
 
+    private HttpStatus httpStatus;
+
+    private LocalDateTime timestamp;
+
+    private String message;
+
+    private String details;
+    
     private List<ValidationError> errors;
 
-    public ErrorResponse(String message2, int status2) {
-    	this.status = status2;
-    	this.message = message2;
-    }
-    public ErrorResponse(HttpStatus badRequest, String message2) {
+    public ErrorResponse(String message2, HttpStatus badRequest) {
 		// TODO Auto-generated constructor stub
-    	this.status = badRequest.value();
+    	this.httpStatus = badRequest;
     	this.message = message2;
 	}
 	@Getter

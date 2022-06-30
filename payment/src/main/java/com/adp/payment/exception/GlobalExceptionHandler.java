@@ -32,21 +32,24 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
     // Let Spring BasicErrorController handle the exception, we just override the status code
     @ExceptionHandler(InvalidBillAmountException.class)
     public ResponseEntity handleInvalidBillAmountException( InvalidBillAmountException invalidBillAmountException)  {
-    	ErrorResponse errorResponse = new ErrorResponse(invalidBillAmountException.getMessage(), HttpStatus.BAD_REQUEST.value());
-        return new ResponseEntity("Invalid Bill Amount", HttpStatus.BAD_REQUEST);
+//    	ErrorResponse errorResponse = new ErrorResponse(invalidBillAmountException.getMessage(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity(invalidBillAmountException.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
 
 
     @ExceptionHandler(NotEnoughCoinsException.class)
     public ResponseEntity handleNotEnoughCoinsException(NotEnoughCoinsException notEnoughCoinsException) throws IOException {
-        return new ResponseEntity("Required coins does not exist", HttpStatus.METHOD_NOT_ALLOWED);
+    	ErrorResponse errorResponse = new ErrorResponse(notEnoughCoinsException.getMessage(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity(notEnoughCoinsException.getMessage(), HttpStatus.METHOD_NOT_ALLOWED);
     }
 
-    // @Validate For Validating Path Variables and Request Parameters
     @ExceptionHandler(ConstraintViolationException.class)
-    public void constraintViolationException(HttpServletResponse response) throws IOException {
-        response.sendError(HttpStatus.BAD_REQUEST.value());
+    public ResponseEntity handleConstraintViolation(
+                        ConstraintViolationException ex)
+    {
+      ErrorResponse error = new ErrorResponse( ex.getMessage(),HttpStatus.BAD_REQUEST);
+      return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     // error handle for @Valid

@@ -3,6 +3,9 @@ package com.adp.payment.util;
 import java.util.LinkedList;
 import java.util.List;
 
+/*
+ * Utility class to get the minimum number of coins required
+ */
 public class PaymentUtil {
 	
 	static final int MAX = 100000;
