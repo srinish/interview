@@ -1,5 +1,6 @@
 package com.adp.payment.controller;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,9 +46,9 @@ public class PaymentController {
 
 	
 	@GetMapping(path="/change")
-	public  ResponseEntity<Map<Integer,Integer>> changeBill(@Valid @BillParamConstraint @RequestParam(required=true) @ModelAttribute("bill") @Min(1) Integer bill) {
+	public  ResponseEntity<Map<Integer,Integer>> changeBill(@Valid @BillParamConstraint @RequestParam(required=true)  @Min(1) Integer bill) {
 
-		
+
 			Map<Integer,Integer> changeDue = service.getChangeDue(bill);
 			return  new ResponseEntity<>(changeDue, HttpStatus.OK);
 

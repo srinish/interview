@@ -80,10 +80,10 @@ public class PaymentControllerTest {
         mockMvc.perform(get("/change/")).andExpect(status().isBadRequest());
     }
     
-//    @Test
+//    @Test(expected=NotEnoughCoinsException.class)
 //    @Order(3)
 //    public void testGetExample_invalidBill() throws Exception {
-//        Mockito.when(paymentService.getChangeDue(anyInt())).thenThrow(new NotEnoughCoinsException("Not enough coins available"));
-//        mockMvc.perform(get("/change/").param("bill", "100")).andExpect(status().isMethodNotAllowed());
+//      //  Mockito.when(paymentService.getChangeDue(anyInt())).thenThrow(new NotEnoughCoinsException("Not enough coins available"));
+//        mockMvc.perform(get("/change/").param("bill", "110")).andExpect(status().is4xxClientError());
 //    }
 }
